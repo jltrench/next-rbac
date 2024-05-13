@@ -1,17 +1,12 @@
+/** @typedef {import('prettier').Config} PrettierConfig */
 
-/**
- * @typedef {import('prettier').Config} PrettierConfig
- */
-
-/**
- * @type { PrettierConfig }
- */
+/** @type { PrettierConfig } */
 const config = {
   plugins: ['prettier-plugin-tailwindcss'],
   printWidth: 80,
   tabWidth: 2,
   useTabs: false,
-  semi: true,
+  semi: false,
   singleQuote: true,
   quoteProps: 'as-needed',
   jsxSingleQuote: false,
@@ -19,7 +14,7 @@ const config = {
   bracketSpacing: true,
   arrowParens: 'always',
   endOfLine: 'auto',
-  bracketSameLine: false,
+  bracketSameLine: false
 }
 
-export default config;
+export default config
