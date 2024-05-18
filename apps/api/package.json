@@ -7,8 +7,11 @@
   "dependencies": {
     "@fastify/cors": "^9.0.1",
     "@saas/auth": "workspace:*",
+    "drizzle-orm": "^0.30.10",
     "fastify": "^4.27.0",
     "fastify-type-provider-zod": "^1.1.9",
+    "nanoid": "^5.0.7",
+    "postgres": "^3.4.4",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -16,6 +19,8 @@
     "@saas/prettier": "workspace:*",
     "@saas/tsconfig": "workspace:*",
     "@types/node": "^20.12.11",
+    "@types/pg": "^8.11.6",
+    "drizzle-kit": "^0.21.2",
     "tsx": "^4.10.1"
   },
   "prettier": "@saas/prettier",
