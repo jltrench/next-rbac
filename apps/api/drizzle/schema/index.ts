@@ -1,6 +1,6 @@
+export * from './users'
 export * from './invites'
 export * from './members'
 export * from './organizations'
 export * from './projects'
 export * from './tokens'
-export * from './users'

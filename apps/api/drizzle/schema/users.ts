@@ -1,5 +1,13 @@
+import { relations } from 'drizzle-orm'
 import { pgTable, text, timestamp } from 'drizzle-orm/pg-core'
 import { nanoid } from 'nanoid'
+
+import { accounts } from './accounts'
+import { invites } from './invites'
+import { members } from './members'
+import { organizations } from './organizations'
+import { projects } from './projects'
+import { tokens } from './tokens'
 
 export const users = pgTable('users', {
   id: text('id').$defaultFn(() => nanoid()),
@@ -14,3 +22,12 @@ export const users = pgTable('users', {
     () => new Date(),
   ),
 })
+
+export const usersRelations = relations(users, ({ many }) => ({
+  tokens: many(tokens),
+  accounts: many(accounts),
+  invites: many(invites),
+  memberOn: many(members),
+  ownsOrganizations: many(organizations),
+  ownsProjects: many(projects),
+}))
