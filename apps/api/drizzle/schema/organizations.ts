@@ -8,21 +8,25 @@ import { projects } from './projects'
 import { users } from './users'
 
 export const organizations = pgTable('organizations', {
-  id: text('id').$defaultFn(() => nanoid()),
-  owner: text('user_id'),
-  name: text('name'),
-  slug: text('slug').unique(),
+  id: text('id')
+    .$defaultFn(() => nanoid())
+    .primaryKey()
+    .unique()
+    .notNull(),
+  owner: text('user_id').notNull(),
+  name: text('name').notNull(),
+  slug: text('slug').unique().notNull(),
   domain: text('domain').unique(),
-  shouldAttachUsersByDomain: boolean('should_attach_users_by_domain').default(
-    false,
-  ),
+  shouldAttachUsersByDomain: boolean('should_attach_users_by_domain')
+    .default(false)
+    .notNull(),
   avatarUrl: text('avatar_url'),
   createdAt: timestamp('created_at', { mode: 'date', precision: 3 })
     .defaultNow()
     .notNull(),
-  updatedAt: timestamp('updated_at', { mode: 'date', precision: 3 }).$onUpdate(
-    () => new Date(),
-  ),
+  updatedAt: timestamp('updated_at', { mode: 'date', precision: 3 })
+    .$onUpdate(() => new Date())
+    .notNull(),
 })
 
 export const organizationRelations = relations(

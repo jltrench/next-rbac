@@ -9,18 +9,23 @@ export const accountProviderEnum = pgEnum('account_provider', ['GITHUB'])
 export const accounts = pgTable(
   'accounts',
   {
-    id: text('id').$defaultFn(() => nanoid()),
-    provider: accountProviderEnum('account_provider'),
-    providerAccountId: text('provider_account_id').unique(),
+    id: text('id')
+      .$defaultFn(() => nanoid())
+      .primaryKey()
+      .unique()
+      .notNull(),
+    provider: accountProviderEnum('account_provider').notNull(),
+    providerAccountId: text('provider_account_id').unique().notNull(),
+    userId: text('user_id').notNull(),
   },
   (t) => ({
-    unq: unique().on(t.provider, t.providerAccountId),
+    unq: unique().on(t.provider, t.userId),
   }),
 )
 
 export const accountsRelations = relations(accounts, ({ one }) => ({
   user: one(users, {
-    fields: [accounts.providerAccountId],
+    fields: [accounts.userId],
     references: [users.id],
   }),
 }))

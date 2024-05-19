@@ -10,17 +10,21 @@ import { projects } from './projects'
 import { tokens } from './tokens'
 
 export const users = pgTable('users', {
-  id: text('id').$defaultFn(() => nanoid()),
+  id: text('id')
+    .$defaultFn(() => nanoid())
+    .primaryKey()
+    .unique()
+    .notNull(),
   name: text('name'),
-  email: text('email'),
+  email: text('email').notNull(),
   passwordHash: text('password_hash'),
   avatarUrl: text('avatar_url'),
   createdAt: timestamp('created_at', { mode: 'date', precision: 3 })
     .defaultNow()
     .notNull(),
-  updatedAt: timestamp('updated_at', { mode: 'date', precision: 3 }).$onUpdate(
-    () => new Date(),
-  ),
+  updatedAt: timestamp('updated_at', { mode: 'date', precision: 3 })
+    .$onUpdate(() => new Date())
+    .notNull(),
 })
 
 export const usersRelations = relations(users, ({ many }) => ({

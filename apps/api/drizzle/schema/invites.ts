@@ -18,11 +18,15 @@ export const invitesUsersRole = pgEnum('role', ['ADMIN', 'MEMBER', 'BILLING'])
 export const invites = pgTable(
   'invites',
   {
-    id: text('id').$defaultFn(() => nanoid()),
+    id: text('id')
+      .$defaultFn(() => nanoid())
+      .primaryKey()
+      .unique()
+      .notNull(),
     email: text('email').notNull(),
-    role: invitesUsersRole('role'),
+    role: invitesUsersRole('role').notNull(),
     author: text('user_id'),
-    organization: text('organization_id'),
+    organization: text('organization_id').notNull(),
     createdAt: timestamp('created_at', { mode: 'date', precision: 3 })
       .defaultNow()
       .notNull(),

@@ -11,10 +11,14 @@ export const membersUsersRole = pgEnum('role', ['ADMIN', 'MEMBER', 'BILLING'])
 export const members = pgTable(
   'members',
   {
-    id: text('id').$defaultFn(() => nanoid()),
-    user: text('user_id'),
-    role: membersUsersRole('role').default('MEMBER'),
-    organization: text('organization_id'),
+    id: text('id')
+      .$defaultFn(() => nanoid())
+      .primaryKey()
+      .unique()
+      .notNull(),
+    user: text('user_id').notNull(),
+    role: membersUsersRole('role').default('MEMBER').notNull(),
+    organization: text('organization_id').notNull(),
   },
   (t) => ({
     unq: unique().on(t.organization, t.user),
