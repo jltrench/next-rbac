@@ -1,13 +1,13 @@
+import { createId } from '@paralleldrive/cuid2'
 import { relations } from 'drizzle-orm'
 import { pgTable, text, timestamp } from 'drizzle-orm/pg-core'
-import { nanoid } from 'nanoid'
 
 import { organizations } from './organizations'
 import { users } from './users'
 
 export const projects = pgTable('projects', {
   id: text('id')
-    .$defaultFn(() => nanoid())
+    .$defaultFn(() => createId())
     .primaryKey()
     .unique()
     .notNull(),

@@ -1,0 +1,1 @@
+DROP INDEX IF EXISTS "email_idx";

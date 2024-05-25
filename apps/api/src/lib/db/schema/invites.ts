@@ -1,13 +1,6 @@
+import { createId } from '@paralleldrive/cuid2'
 import { relations } from 'drizzle-orm'
-import {
-  pgEnum,
-  pgTable,
-  text,
-  timestamp,
-  unique,
-  uniqueIndex,
-} from 'drizzle-orm/pg-core'
-import { nanoid } from 'nanoid'
+import { pgEnum, pgTable, text, timestamp, unique } from 'drizzle-orm/pg-core'
 
 import { organizations } from './organizations'
 import { users } from './users'
@@ -19,7 +12,7 @@ export const invites = pgTable(
   'invites',
   {
     id: text('id')
-      .$defaultFn(() => nanoid())
+      .$defaultFn(() => createId())
       .primaryKey()
       .unique()
       .notNull(),
@@ -33,7 +26,6 @@ export const invites = pgTable(
   },
   (t) => ({
     unq: unique().on(t.email, t.organization),
-    emailIdx: uniqueIndex('email_idx').on(invites.email),
   }),
 )
 

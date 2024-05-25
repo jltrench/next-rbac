@@ -7,7 +7,7 @@ import {
   ZodTypeProvider,
 } from 'fastify-type-provider-zod'
 
-import { createAccount } from './routes/auth/create-account'
+import { createAccount } from '@/http/routes/auth/create-account'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
