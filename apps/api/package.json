@@ -5,7 +5,8 @@
     "dev": "tsx watch src/http/server.ts",
     "db:gen": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:studio": "drizzle-kit studio --port 5555 --verbose"
+    "db:studio": "drizzle-kit studio --port 5555 --verbose",
+    "db:seed": "tsx drizzle/seed.ts"
   },
   "dependencies": {
     "@fastify/cors": "^9.0.1",
@@ -20,6 +21,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@saas/eslint-config": "workspace:*",
     "@saas/prettier": "workspace:*",
     "@saas/tsconfig": "workspace:*",

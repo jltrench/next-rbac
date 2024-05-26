@@ -35,3 +35,6 @@ export const usersRelations = relations(users, ({ many }) => ({
   ownsOrganizations: many(organizations),
   ownsProjects: many(projects),
 }))
+
+export type User = typeof users.$inferSelect
+export type UserInsert = typeof users.$inferInsert

@@ -1,0 +1,1 @@
+ALTER TABLE "projects" RENAME COLUMN "user_id" TO "owner_id";

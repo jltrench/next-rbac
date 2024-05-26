@@ -11,7 +11,7 @@ export const projects = pgTable('projects', {
     .primaryKey()
     .unique()
     .notNull(),
-  owner: text('user_id').notNull(),
+  owner: text('owner_id').notNull(),
   organization: text('organization_id').notNull(),
   name: text('name').notNull(),
   description: text('description').notNull(),
