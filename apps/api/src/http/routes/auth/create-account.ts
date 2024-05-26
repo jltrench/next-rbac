@@ -1,11 +1,11 @@
 import { hash } from 'bcryptjs'
-import { eq } from 'drizzle-orm'
+import { eq, sql } from 'drizzle-orm'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 
 import { db } from '@/lib/db'
-import { users } from '@/lib/db/schema'
+import { members, organizations, users } from '@/lib/db/schema'
 
 export async function createAccount(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -32,13 +32,29 @@ export async function createAccount(app: FastifyInstance) {
         return reply.status(400).send({ message: 'Email already in use' })
       }
 
+      const [, domain] = email.split('@')
+
+      const autoJoinOrganization = await db.query.organizations.findFirst({
+        where: sql`${organizations.shouldAttachUsersByDomain} = true AND ${organizations.domain} = ${domain}`,
+      })
+
       const passwordHash = await hash(password, 6)
 
-      await db.insert(users).values({
-        name,
-        email,
-        passwordHash,
-      })
+      const newUser = await db
+        .insert(users)
+        .values({
+          name,
+          email,
+          passwordHash,
+        })
+        .returning()
+
+      if (autoJoinOrganization) {
+        await db.insert(members).values({
+          organization: autoJoinOrganization.id,
+          user: newUser[0].id,
+        })
+      }
 
       return reply.status(201).send({ message: 'Account created' })
     },
