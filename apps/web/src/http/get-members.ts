@@ -1,0 +1,22 @@
+import type { Role } from '@saas/auth'
+
+import { api } from '@/http/api-client'
+
+interface GetMembersResponse {
+  members: {
+    id: string
+    role: Role
+    userId: string
+    name: string | null
+    email: string
+    avatarUrl: string | null
+  }[]
+}
+
+export async function getMembers(org: string) {
+  const result = await api
+    .get(`organizations/${org}/members`)
+    .json<GetMembersResponse>()
+
+  return result
+}

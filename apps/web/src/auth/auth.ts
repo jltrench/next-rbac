@@ -9,12 +9,12 @@ export function isAuthenticated() {
   return !!cookies().get('token')?.value
 }
 
-export function getCurentOrg() {
+export function getCurrentOrg() {
   return cookies().get('org')?.value ?? null
 }
 
 export async function getCurrentMembership() {
-  const org = getCurentOrg()
+  const org = getCurrentOrg()
 
   if (!org) {
     return null
