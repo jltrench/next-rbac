@@ -1,27 +1,25 @@
 import { api } from '@/http/api-client'
 
-interface GetProjectsResponse {
-  projects: {
-    description: string
-    slug: string
-    id: string
-    name: string
-    avatarUrl: string | null
-    organizationId: string
-    ownerId: string
-    createdAt: string
-    owner: {
-      id: string
-      name: string | null
-      avatarUrl: string | null
+interface GetBillingResponse {
+  billing: {
+    seats: {
+      amount: number
+      unit: number
+      price: number
     }
-  }[]
+    projects: {
+      amount: number
+      unit: number
+      price: number
+    }
+    total: number
+  }
 }
 
-export async function getProjects(org: string) {
+export async function getBilling(org: string) {
   const result = await api
-    .get(`organizations/${org}/projects`)
-    .json<GetProjectsResponse>()
+    .get(`organizations/${org}/billing`)
+    .json<GetBillingResponse>()
 
   return result
 }
